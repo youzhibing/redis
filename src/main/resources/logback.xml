@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="60 seconds">
+
+	<property name="LOG_NAME" value="/var/mylog" />
+
+	<appender name="info_file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"> <!-- 级别过滤器 -->
+			<!-- 过滤掉非INFO级别 -->
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>${LOG_NAME}/logs/info/info.log</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss}|%p|%logger|%msg%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+			<FileNamePattern>${LOG_NAME}/logs/info/info.%i.log</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>20MB</maxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="warn_file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">	<!-- 临界值过滤器 -->
+			<!-- 过滤掉低于warn的级别 -->
+			<level>warn</level>
+		</filter>
+		<file>${LOG_NAME}/logs/warn/warn.log</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss}|%p|%logger|%msg%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+			<FileNamePattern>${LOG_NAME}/logs/warn/warn.%i.log</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>20MB</maxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss}|%p|%logger|%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 控制com.yzb.log.LogTest类的日志打印，打印级别为“error”；additivity属性为false，表示此logger的打印信息不再向上级传递 -->
+	<!-- com.yzb.log.LogTest类的日志由此logger控制，打印信息不再上传到root -->
+	<!-- logger控制某个包下的类或者某个具体类的日志信息 -->
+	<logger name="com.yzb.log.LogTest" level="error" additivity="false">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="warn_file" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="info_file" />
+		<appender-ref ref="warn_file" />
+		<appender-ref ref="stdout" />
+	</root>
+</configuration>
