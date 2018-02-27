@@ -3,12 +3,14 @@ spring-boot基础上操作redis， 主要分以下几部分
 redis-*.conf与sentinel-*.conf都是搭建环境是的初始配置，sentinel-*.conf在环境启动之后会有变化
 
 1、redis sentinel连接与基本操作
+	配置文件在sentinel文件夹下
 	redis从节点作用：第一，当主节点出现故障时，从节点作为后备顶上来实现故障转移；第二，拓展主节点的读能力，尤其实在读多写少的场景
 		从节点拓展主节点的读能力，并不是通过客户端直接连接从节点的方式实现，因为一旦从节点出现故障，那么该客户端将与该从节点失联，最终获取不到redis连接了
 		与获取master连接一样，通过Redis Sentinel获取slave的连接，那么底层redis slave节点是否出现故障就不影响客户端了
 		Redis Sentinel读写分离需要考虑具体场景，是否真的需要读写分离; redis是内存数据库，不存在关系型数据的IO性能瓶颈；
 2、redis cluster连接与基本操作
-	后续补上
+	配置文件在cluster文件夹下；redis3.0版本正式推出redis cluster，解决redis分布式需求，当遇到单机内存、并发、流量等瓶颈时，可以采用Cluster架构方案达到负载均衡的目的
+	集群模式下slaveof添加从节点操作不再支持；对集群的操作，像伸缩操作等都通过redis-trib.rb来进行
 
 3、redis做缓存
 	后续补上
