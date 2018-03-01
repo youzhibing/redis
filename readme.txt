@@ -1,6 +1,7 @@
 spring-boot基础上操作redis， 主要分以下几部分
-不管涉及到哪一部分，前提基础是对应的redis环境需要搭建好； 另外也需要注意redis、jedis的版本，版本不同满足的功能也不同
-redis-*.conf与sentinel-*.conf都是搭建环境是的初始配置，sentinel-*.conf在环境启动之后会有变化
+	Springboot参考指南:https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/
+	不管涉及到哪一部分，前提基础是对应的redis环境需要搭建好； 另外也需要注意redis、jedis的版本，版本不同满足的功能也不同
+	redis-*.conf与sentinel-*.conf都是搭建环境是的初始配置，sentinel-*.conf在环境启动之后会有变化
 
 1、redis sentinel连接与基本操作
 	配置文件在sentinel文件夹下
@@ -11,8 +12,6 @@ redis-*.conf与sentinel-*.conf都是搭建环境是的初始配置，sentinel-*.
 2、redis cluster连接与基本操作
 	配置文件在cluster文件夹下；redis3.0版本正式推出redis cluster，解决redis分布式需求，当遇到单机内存、并发、流量等瓶颈时，可以采用Cluster架构方案达到负载均衡的目的
 	集群模式下slaveof添加从节点操作不再支持；对集群的操作，像伸缩操作等都通过redis-trib.rb来进行
-
-3、redis做缓存
-	后续补上
-4、redis实现session共享
-	后续补上
+	redis集群选主没有直接使用从节点进行领导者选举，避免从节点资源浪费；使用集群内主节点进行领导者选主，即使只有一个从节点也可以完成选举过程
+3、redis做缓存、实现session共享
+	
