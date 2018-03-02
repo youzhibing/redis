@@ -1,4 +1,4 @@
-package com.lee.redis.config;
+package com.lee.redis.config.sentinel;
 
 import java.util.Arrays;
 import java.util.HashSet;

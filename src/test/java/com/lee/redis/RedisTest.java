@@ -33,11 +33,11 @@ public class RedisTest {
 	public void getNameTest() {
 		Jedis jedis = null;
 		try {
-			jedis = sentinelPool.getResource();
+			jedis = sentinelPool.getResource();		// 获取master连接
 			String name = jedis.get("name");
 			System.out.println("name is " + name);
 			
-			// 可以通过slave节点信息，来获取其中某个slave节点的连接，并从次slave读取数据，达到读写分离
+			// 可以通过slave节点信息，来获取其中某个slave节点的连接，并从此slave读取数据，达到读写分离
 			/*List<Map<String, String>> slaves = jedis.sentinelSlaves(masterName);	// Jedis实现了SentinelCommands接口； ERR unknown command 'SENTINEL'错误
 			System.out.println("slaves :  " + JSON.toJSONString(slaves, true));*/
 		} catch(Exception e) {
